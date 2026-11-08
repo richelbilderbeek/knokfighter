@@ -74,3 +74,16 @@ Tetralith
 matplotlib
 seaborn
 NAISS
+Qt
+VCL
+Knokfighter
+KnokFighter
+GameKnokfighter
+Storyline
+Bilderbeek's
+Bogaart
+pdf
+png
+ppt
+Joost
+photorealistic

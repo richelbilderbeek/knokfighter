@@ -1,0 +1,43 @@
+# Build the Qt version of the game on Windows,
+# creating a Windows executable as a workflow artifact
+name: Build on Windows
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build_windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: jurplel/install-qt-action@v4
+        with:
+          version: '6.8.3'
+          arch: 'win64_msvc2022_64'
+          modules: 'qtmultimedia'
+          cache: true
+
+      - uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Build
+        shell: cmd
+        run: |
+          mkdir build
+          cd build
+          qmake ..\knokfighter.pro
+          nmake release
+
+      - name: Collect the executable and the Qt libraries it needs
+        shell: cmd
+        run: |
+          mkdir knokfighter
+          copy build\release\knokfighter.exe knokfighter\
+          copy LICENSE knokfighter\
+          windeployqt --release --no-translations knokfighter\knokfighter.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: knokfighter_windows
+          path: knokfighter
