@@ -1,10 +1,9 @@
 # KnokFighter
 
-The game KnokFighter using the C++ VCL library
+KnokFighter is a Double Dragon clone with photorealistic graphics
 and one of
-[Richèl Bilderbeek's games](https://richelbilderbeek.github.io/games).
-
-Programmed by Joost van den Bogaart and Richel Bilderbeek.
+[Richèl Bilderbeek's games](https://richelbilderbeek.github.io/games),
+which he programmed together with Joost van den Bogaart.
 
 - [Storyline (pdf)](KnokFighterStory_1_0.pdf)
 - [Storyline (ppt)](KnokFighterStory_1_0.ppt)

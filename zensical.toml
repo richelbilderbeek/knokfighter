@@ -1,12 +1,13 @@
 [project]
-site_name = "Knokfighter"
+site_name = "KnokFighter"
 site_url = "https://richelbilderbeek.github.io/knokfighter/"
 repo_url = "https://github.com/richelbilderbeek/knokfighter"
 edit_uri = "blob/main/docs/"
 
 nav = [
   { "Start" = "README.md"},
-  "play.md"
+  "faq.md",
+  "play.md",
 ]
 
 [project.theme]
