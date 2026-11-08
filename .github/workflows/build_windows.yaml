@@ -1,28 +1,12 @@
-# Build the Qt version of the game
-name: Build game
+# Build the Qt version of the game on Windows,
+# creating a Windows executable as a workflow artifact
+name: Build on Windows
 
 on:
   push:
   pull_request:
 
 jobs:
-  build_linux:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Install Qt
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y qt6-base-dev qt6-multimedia-dev libgl-dev
-
-      - name: Build
-        run: |
-          mkdir build
-          cd build
-          qmake6 ../knokfighter.pro
-          make -j4
-
   build_windows:
     runs-on: windows-latest
     steps:

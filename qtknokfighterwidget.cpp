@@ -319,7 +319,9 @@ void QtKnokfighterWidget::keyPressEvent(QKeyEvent* event)
           {
             case JOOSTSTAATLINKS:
               //Joost kijkt naar links en gaat nu naar rechts kijken
-              //(the original VCL version loads 'JoostStaatLinks' here)
+              //BUG (kept from the original VCL version): this loads the
+              //facing-left picture, where it should load 'JoostStaatRechts'.
+              //Joost faces right (his Tag says so), but is drawn facing left
               m_joost.load("JoostStaatLinks");
               m_joost_shadow.load("JoostStaatLinksShadow");
               m_joost.m_tag = JOOSTSTAATRECHTS;
