@@ -14,8 +14,8 @@ nav = [
 variant = "classic"
 palette.primary = "orange"
 
-favicon = "beer.png"
-logo = "beer.png"
+favicon = "icon.png"
+logo = "icon.png"
 
 # https://zensical.org/docs/setup/language/
 language = "en"
