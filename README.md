@@ -5,6 +5,24 @@
 The game is built by continuous integration into the folder `docs/game`,
 which is not part of this repository.
 
+## Building the game
+
+The game was originally written in C++Builder 6 using the VCL
+(`ProjectKnokfighter.bpr`).
+There is also a Qt version (`knokfighter.pro`), which is built
+by the [Build game](.github/workflows/build_game.yaml) workflow.
+On Windows, that workflow creates a zip file with the executable,
+which can be downloaded from the workflow run.
+
+To build the Qt version locally:
+
+```bash
+mkdir build
+cd build
+qmake ../knokfighter.pro
+make
+```
+
 ## Files used by continuous integration scripts
 
 <!-- markdownlint-disable MD013 --><!-- Tables cannot be split up over lines, hence will break 80 characters per line -->

@@ -26,3 +26,12 @@
 *.exe
 *.out
 *.app
+
+# Qt build files
+build/
+Makefile*
+.qmake.stash
+moc_*
+qrc_*
+*.pro.user*
+/knokfighter

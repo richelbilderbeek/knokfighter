@@ -74,3 +74,5 @@ Tetralith
 matplotlib
 seaborn
 NAISS
+Qt
+VCL
