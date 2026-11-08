@@ -1,20 +1,20 @@
-# KnokFighter
+# Knokfighter
 
-Branch|[![Travis CI logo](pics/TravisCI.png)](https://travis-ci.org)
----|---
-`master`|[![Build Status](https://travis-ci.org/richelbilderbeek/KnokFighter.svg?branch=master)](https://travis-ci.org/richelbilderbeek/KnokFighter)
+- [Go to the nicely rendered website](https://richelbilderbeek.github.io/knokfighter/).
 
-* [Go to the nicer looking website](http://richelbilderbeek.github.io/Knokfighter)
+The game is built by continuous integration into the folder `docs/game`,
+which is not part of this repository.
 
-The game KnokFighter using the C++ VCL library.
+## Files used by continuous integration scripts
 
-Programmed by Joost van den Bogaart and Richel Bilderbeek.
+<!-- markdownlint-disable MD013 --><!-- Tables cannot be split up over lines, hence will break 80 characters per line -->
 
- * [Storyline (pdf)](KnokFighterStory_1_0.pdf)
- * [Storyline (ppt)](KnokFighterStory_1_0.ppt)
+Filename                                  |Descriptions
+------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------
+[mlc_config.json](mlc_config.json)        |Configuration of the link checker, use `markdown-link-check --config mlc_config.json --quiet docs/**/*.md` to do link checking locally
+[.spellcheck.yml](.spellcheck.yml)        |Configuration of the spell checker, use `pyspelling -c .spellcheck.yml` to do spellcheck locally
+[.wordlist.txt](.wordlist.txt)            |Whitelisted words for the spell checker, use `pyspelling -c .spellcheck.yml` to do spellcheck locally
+[.markdownlint.jsonc](.markdownlint.jsonc)|Configuration of the markdown linter, use `markdownlint "**/*.md"` to do markdown linting locally. The name of this file is a default name.
+[.markdownlintignore](.markdownlintignore)|Files ignored by the markdown linter, use `markdownlint "**/*.md"` to do markdown linting locally. The name of this file is a default name.
 
-
-![GameKnokfighter_1_0.png](GameKnokfighter_1_0.png)
-
-![GameKnokfighter_2_0.png](GameKnokfighter_2_0.png)
-
+<!-- markdownlint-enable MD013 -->
