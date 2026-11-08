@@ -76,3 +76,8 @@ seaborn
 NAISS
 Qt
 VCL
+Knokfighter
+KnokFighter
+GameKnokfighter
+Storyline
+Bilderbeek's
