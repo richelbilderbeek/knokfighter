@@ -31,6 +31,17 @@ with sync_playwright() as p:
         }
         return path.join(' > ');
     }"""))
+    print("DOM:", page.evaluate("""() => {
+        const c = document.getElementById('qt-shadow-container');
+        if (!c) return 'no container; body: ' + document.body.innerHTML.slice(0, 500);
+        const r = c.shadowRoot;
+        if (!r) return 'no shadow root';
+        const helpers = r.querySelectorAll('.qt-window-focus-helper');
+        const out = ['helpers: ' + helpers.length, 'shadow active: ' + (r.activeElement ? r.activeElement.className : null)];
+        if (helpers.length) { helpers[0].focus(); out.push('after focus: ' + document.activeElement.id + ' / ' + (r.activeElement ? r.activeElement.className : null)); }
+        out.push('windows: ' + Array.from(r.querySelectorAll('.qt-window')).map(w => w.className + ' ' + w.getBoundingClientRect().width).join(', '));
+        return out.join(' | ');
+    }"""))
     page.keyboard.press("Space")
     time.sleep(2)
     page.screenshot(path="screenshot_2_running.png")
