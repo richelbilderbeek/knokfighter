@@ -1,4 +1,5 @@
 """Check that the WebAssembly game starts in a browser and reacts to keys."""
+import base64
 import sys
 import time
 
@@ -13,6 +14,7 @@ with sync_playwright() as p:
     errors = []
     page.on("pageerror", lambda e: errors.append(str(e)))
     page.on("console", lambda m: print("console:", m.text))
+    page.on("response", lambda r: print("response:", r.status, r.url))
     page.goto(URL)
     time.sleep(15)
     page.screenshot(path="screenshot_1_start.png")
@@ -32,6 +34,11 @@ with sync_playwright() as p:
     page.screenshot(path="screenshot_3_kick.png")
     kick = page.screenshot()
     browser.close()
+
+# Show the screenshots in the log, as small JPEG images
+for name in ["screenshot_1_start", "screenshot_2_running", "screenshot_3_kick"]:
+    with open(name + ".png", "rb") as f:
+        print(name + ":", base64.b64encode(f.read()).decode())
 
 if errors:
     sys.exit(f"Page errors: {errors}")
