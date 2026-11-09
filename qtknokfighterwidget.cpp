@@ -165,6 +165,29 @@ QtKnokfighterWidget::QtKnokfighterWidget(QWidget* parent)
   m_wolk_timer.setInterval(350); // Disabled
 
   QTimer::singleShot(0, this, &QtKnokfighterWidget::onIdle);
+  QTimer::singleShot(100, this, &QtKnokfighterWidget::focusInBrowser);
+}
+
+void QtKnokfighterWidget::focusInBrowser()
+{
+#ifdef Q_OS_WASM
+  // In the web version, the keys only arrive if the window's focus helper
+  // element has the browser's focus. Qt does not always give it the focus
+  // (e.g. at startup, or after clicking on an already active window),
+  // so do so here. This uses the web page structure of Qt 6.11
+  using emscripten::val;
+  const val container = val::global("document").call<val>("getElementById", std::string("qt-shadow-container"));
+  if (container.isNull() || container["shadowRoot"].isNull()) return;
+  const val helper = container["shadowRoot"].call<val>("querySelector", std::string(".qt-window-focus-helper"));
+  if (helper.isNull()) return;
+  helper.call<void>("focus");
+#endif
+}
+
+void QtKnokfighterWidget::mousePressEvent(QMouseEvent* event)
+{
+  focusInBrowser();
+  QWidget::mousePressEvent(event);
 }
 
 void QtKnokfighterWidget::createPanels()

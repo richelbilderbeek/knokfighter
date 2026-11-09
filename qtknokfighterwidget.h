@@ -63,6 +63,7 @@ public:
 
 protected:
   void keyPressEvent(QKeyEvent* event) override;
+  void mousePressEvent(QMouseEvent* event) override;
   void paintEvent(QPaintEvent* event) override;
 
 private:
@@ -99,6 +100,9 @@ private:
   QSoundEffect* m_playing_sound = nullptr;
 
   void createPanels();
+
+  /// Web version only: give the keyboard focus to the game's web page element
+  void focusInBrowser();
 
   /// Like the Win32 PlaySound with SND_ASYNC: stops the sound being played
   void playSound(const QString& name);
