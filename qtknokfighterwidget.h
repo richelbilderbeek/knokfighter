@@ -94,10 +94,14 @@ private:
   QProgressBar* m_richel_health_bar;
   QProgressBar* m_joost_health_bar;
 
+  // Unused in the web version
   QHash<QString, QSoundEffect*> m_sounds;
   QSoundEffect* m_playing_sound = nullptr;
 
   void createPanels();
+
+  /// Web version only: give the keyboard focus to the game's web page element
+  void focusInBrowser();
 
   /// Like the Win32 PlaySound with SND_ASYNC: stops the sound being played
   void playSound(const QString& name);
@@ -109,6 +113,9 @@ private:
   void onTimerRichel();
   void onRichelAiTimer();
   void onWolkTimer();
+
+  /// Show the message and close the game
+  void gameOver(const QString& message);
 };
 
 #endif // QTKNOKFIGHTERWIDGET_H

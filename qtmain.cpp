@@ -24,6 +24,14 @@ int main(int argc, char* argv[])
   QApplication a(argc, argv);
   QApplication::setApplicationName("Knokfighter 1 - Battle of Honour");
   QtKnokfighterWidget w;
+#ifdef Q_OS_WASM
+  // In the browser, the game fills the web page, without a window frame
+  w.setWindowFlags(Qt::FramelessWindowHint);
+  w.move(0, 0);
+#endif
   w.show();
+  // Let the game receive the keys without clicking it first
+  w.activateWindow();
+  w.setFocus();
   return a.exec();
 }

@@ -21,9 +21,9 @@ The game was originally written in C++Builder 6 using the VCL
 There is also a Qt version (`knokfighter.pro`), which is built
 by continuous integration:
 
-- [Build on Linux](.github/workflows/build_linux.yaml)
+- [Build on Linux](https://github.com/richelbilderbeek/knokfighter/blob/main/.github/workflows/build_linux.yaml)
   checks that the game builds on Linux
-- [Build on Windows](.github/workflows/build_windows.yaml)
+- [Build on Windows](https://github.com/richelbilderbeek/knokfighter/blob/main/.github/workflows/build_windows.yaml)
   creates a zip file with the Windows executable,
   which can be downloaded from the workflow run
 

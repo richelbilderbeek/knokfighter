@@ -7,7 +7,14 @@
 #   make           # nmake or jom when using MSVC
 TEMPLATE = app
 TARGET = knokfighter
-QT += core gui widgets multimedia
+QT += core gui widgets
+
+# Qt Multimedia is not available for WebAssembly,
+# the web version uses the browser to play sounds
+!wasm {
+  QT += multimedia
+  RESOURCES += knokfighter_sounds.qrc
+}
 CONFIG += c++17
 
 SOURCES += \

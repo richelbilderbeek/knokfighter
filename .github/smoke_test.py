@@ -1,30 +1,42 @@
-"""Check that the WebAssembly game starts in a browser and reacts to clicks."""
-import base64
+"""Check that the WebAssembly game starts in a browser and reacts to keys."""
 import sys
 import time
 
 from playwright.sync_api import sync_playwright
 
-URL = "http://localhost:8000/carnaval_tic_tac_toe.html"
+URL = "http://localhost:8000/knokfighter.html"
 
 with sync_playwright() as p:
     browser = p.chromium.launch(channel="chrome")
     # The same size as the iframe on the website
-    page = browser.new_page(viewport={"width": 147, "height": 336})
+    page = browser.new_page(viewport={"width": 852, "height": 658})
     errors = []
     page.on("pageerror", lambda e: errors.append(str(e)))
+    page.on("console", lambda m: print("console:", m.text))
     page.goto(URL)
-    time.sleep(10)
-    before = page.screenshot()
-    for x in range(20, 147, 40):
-        for y in range(20, 336, 40):
-            page.mouse.click(x, y)
-    time.sleep(1)
-    after = page.screenshot()
+    time.sleep(15)
+    page.screenshot(path="screenshot_1_start.png")
+    start = page.screenshot()
+    # Give the game the keyboard focus, then start it
+    page.mouse.click(400, 300)
+    page.keyboard.press("Space")
+    time.sleep(2)
+    page.screenshot(path="screenshot_2_running.png")
+    running = page.screenshot()
+    # Walk left, then kick
+    for _ in range(3):
+        page.keyboard.press("ArrowLeft")
+        time.sleep(0.6)
+    page.keyboard.press("w")
+    time.sleep(0.3)
+    page.screenshot(path="screenshot_3_kick.png")
+    kick = page.screenshot()
     browser.close()
 
-print("Screenshot:", base64.b64encode(after).decode())
 if errors:
     sys.exit(f"Page errors: {errors}")
-if before == after:
-    sys.exit("Clicking did not change the page")
+if start == running:
+    sys.exit("Pressing space did not start the game")
+if running == kick:
+    sys.exit("Pressing keys did not change the game")
+print("OK")

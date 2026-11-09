@@ -65,15 +65,5 @@
   <file alias="images/Wolk1.png">CppKnokfighterResources/Wolk1.png</file>
   <file alias="images/Wolk2.png">CppKnokfighterResources/Wolk2.png</file>
   <file alias="images/Wolk3.png">CppKnokfighterResources/Wolk3.png</file>
-  <file alias="sounds/Joostgeraakt.wav">Joostgeraakt.wav</file>
-  <file alias="sounds/Joostschophoog.wav">Joostschophoog.wav</file>
-  <file alias="sounds/Joostschoplaag.wav">Joostschoplaag.wav</file>
-  <file alias="sounds/Joostslaathoog.wav">Joostslaathoog.wav</file>
-  <file alias="sounds/Joostslaatlaag.wav">Joostslaatlaag.wav</file>
-  <file alias="sounds/Richelgeraakt.wav">Richelgeraakt.wav</file>
-  <file alias="sounds/Richelschopthoog.wav">Richelschopthoog.wav</file>
-  <file alias="sounds/Richelschoptlaag.wav">Richelschoptlaag.wav</file>
-  <file alias="sounds/Richelslaathoog.wav">Richelslaathoog.wav</file>
-  <file alias="sounds/Richelslaatlaag.wav">Richelslaatlaag.wav</file>
 </qresource>
 </RCC>
