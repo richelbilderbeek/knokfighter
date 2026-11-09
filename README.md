@@ -1,4 +1,4 @@
-# Knokfighter
+# KnokFighter
 
 - [Go to the nicely rendered website](https://richelbilderbeek.github.io/knokfighter/).
 
