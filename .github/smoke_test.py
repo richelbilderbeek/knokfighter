@@ -1,5 +1,4 @@
 """Check that the WebAssembly game starts in a browser and reacts to keys."""
-import base64
 import sys
 import time
 
@@ -14,34 +13,12 @@ with sync_playwright() as p:
     errors = []
     page.on("pageerror", lambda e: errors.append(str(e)))
     page.on("console", lambda m: print("console:", m.text))
-    page.on("response", lambda r: print("response:", r.status, r.url))
     page.goto(URL)
     time.sleep(15)
     page.screenshot(path="screenshot_1_start.png")
     start = page.screenshot()
     # Give the game the keyboard focus, then start it
     page.mouse.click(400, 300)
-    time.sleep(1)
-    print("active element:", page.evaluate("""() => {
-        let e = document.activeElement;
-        let path = [];
-        while (e) {
-            path.push(e.tagName + (e.id ? '#' + e.id : '') + (e.className ? '.' + e.className : ''));
-            e = e.shadowRoot ? e.shadowRoot.activeElement : null;
-        }
-        return path.join(' > ');
-    }"""))
-    print("DOM:", page.evaluate("""() => {
-        const c = document.getElementById('qt-shadow-container');
-        if (!c) return 'no container; body: ' + document.body.innerHTML.slice(0, 500);
-        const r = c.shadowRoot;
-        if (!r) return 'no shadow root';
-        const helpers = r.querySelectorAll('.qt-window-focus-helper');
-        const out = ['helpers: ' + helpers.length, 'shadow active: ' + (r.activeElement ? r.activeElement.className : null)];
-        if (helpers.length) { helpers[0].focus(); out.push('after focus: ' + document.activeElement.id + ' / ' + (r.activeElement ? r.activeElement.className : null)); }
-        out.push('windows: ' + Array.from(r.querySelectorAll('.qt-window')).map(w => w.className + ' ' + w.getBoundingClientRect().width).join(', '));
-        return out.join(' | ');
-    }"""))
     page.keyboard.press("Space")
     time.sleep(2)
     page.screenshot(path="screenshot_2_running.png")
@@ -55,11 +32,6 @@ with sync_playwright() as p:
     page.screenshot(path="screenshot_3_kick.png")
     kick = page.screenshot()
     browser.close()
-
-# Show the screenshots in the log, as small JPEG images
-for name in ["screenshot_1_start", "screenshot_2_running", "screenshot_3_kick"]:
-    with open(name + ".png", "rb") as f:
-        print(name + ":", base64.b64encode(f.read()).decode())
 
 if errors:
     sys.exit(f"Page errors: {errors}")

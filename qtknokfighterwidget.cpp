@@ -28,7 +28,26 @@
 #ifdef Q_OS_WASM
 // Qt Multimedia is not available for WebAssembly:
 // the web version plays the sounds with the browser's Audio objects
+#include <emscripten/em_js.h>
 #include <emscripten/val.h>
+
+// In the web version, the keys only arrive if the window's focus helper
+// element has the browser's focus. Qt does not always give it the focus
+// (e.g. at startup, or after clicking on an already active window),
+// so do so here, also after each click. This uses the web page structure of Qt 6.11
+EM_JS(void, knokfighter_focus_in_browser, (), {
+  function focusGame() {
+    var container = document.getElementById('qt-shadow-container');
+    if (!container || !container.shadowRoot) return;
+    var helper = container.shadowRoot.querySelector('.qt-window-focus-helper');
+    if (helper) helper.focus();
+  }
+  if (!window.knokfighterFocusListener) {
+    window.knokfighterFocusListener = true;
+    document.addEventListener('click', focusGame);
+  }
+  focusGame();
+});
 #else
 #include <QSoundEffect>
 #endif
@@ -171,23 +190,8 @@ QtKnokfighterWidget::QtKnokfighterWidget(QWidget* parent)
 void QtKnokfighterWidget::focusInBrowser()
 {
 #ifdef Q_OS_WASM
-  // In the web version, the keys only arrive if the window's focus helper
-  // element has the browser's focus. Qt does not always give it the focus
-  // (e.g. at startup, or after clicking on an already active window),
-  // so do so here. This uses the web page structure of Qt 6.11
-  using emscripten::val;
-  const val container = val::global("document").call<val>("getElementById", std::string("qt-shadow-container"));
-  if (container.isNull() || container["shadowRoot"].isNull()) return;
-  const val helper = container["shadowRoot"].call<val>("querySelector", std::string(".qt-window-focus-helper"));
-  if (helper.isNull()) return;
-  helper.call<void>("focus");
+  knokfighter_focus_in_browser();
 #endif
-}
-
-void QtKnokfighterWidget::mousePressEvent(QMouseEvent* event)
-{
-  focusInBrowser();
-  QWidget::mousePressEvent(event);
 }
 
 void QtKnokfighterWidget::createPanels()
