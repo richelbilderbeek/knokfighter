@@ -109,6 +109,9 @@ private:
   void onTimerRichel();
   void onRichelAiTimer();
   void onWolkTimer();
+
+  /// Show the message and close the game
+  void gameOver(const QString& message);
 };
 
 #endif // QTKNOKFIGHTERWIDGET_H

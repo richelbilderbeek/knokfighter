@@ -797,6 +797,19 @@ void QtKnokfighterWidget::onRichelAiTimer()
   onIdle();
 }
 
+void QtKnokfighterWidget::gameOver(const QString& message)
+{
+  m_richel_ai_timer.stop();
+  m_timer_joost.stop();
+  m_timer_richel.stop();
+  // Not QMessageBox::information, as a blocking dialog
+  // does not work in the web (WebAssembly) version
+  QMessageBox* const box = new QMessageBox(QMessageBox::Information, windowTitle(), message, QMessageBox::Ok, this);
+  box->setAttribute(Qt::WA_DeleteOnClose);
+  connect(box, &QMessageBox::finished, this, &QWidget::close);
+  box->open();
+}
+
 void QtKnokfighterWidget::onWolkTimer()
 {
   //tekst inladen
@@ -814,20 +827,12 @@ void QtKnokfighterWidget::onWolkTimer()
   //als het spel afgelopen is:
   if (m_richel_health_bar->value() < 1)
   {
-    m_richel_ai_timer.stop();
-    m_timer_joost.stop();
-    m_timer_richel.stop();
-    QMessageBox::information(this, windowTitle(), "Richel is dead! Evil is defeated!");
-    close();
+    gameOver("Richel is dead! Evil is defeated!");
     return;
   }
   else if (m_joost_health_bar->value() < 1)
   {
-    m_richel_ai_timer.stop();
-    m_timer_joost.stop();
-    m_timer_richel.stop();
-    QMessageBox::information(this, windowTitle(), "Joost is defeated! All hope for mankind is lost!");
-    close();
+    gameOver("Joost is defeated! All hope for mankind is lost!");
     return;
   }
   onIdle();
