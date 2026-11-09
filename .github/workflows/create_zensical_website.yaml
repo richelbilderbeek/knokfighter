@@ -65,6 +65,11 @@ jobs:
           cp *.wav docs/game/sounds/
       - run: pip install zensical
       - run: zensical build --clean --strict
+      - name: Check that the 'Play' page finds the game
+        run: |
+          src=$(grep -o '<iframe src="[^"]*"' site/play/index.html | cut -d '"' -f 2)
+          echo "The iframe loads '$src'"
+          test -f "site/play/$src"
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site
