@@ -1,4 +1,4 @@
-# Play Knokfighter
+# Play
 
 <!-- markdownlint-disable MD033 --><!-- Need HTML here -->
 
