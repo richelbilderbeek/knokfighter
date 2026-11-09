@@ -45,8 +45,8 @@ jobs:
         # WebAssembly Qt also needs a desktop Qt for its host tools
         run: |
           pip install aqtinstall
-          aqt install-qt linux desktop "$QT_VERSION" linux_gcc_64 -m qtmultimedia -O "$HOME/qt"
-          aqt install-qt all_os wasm "$QT_VERSION" wasm_singlethread -m qtmultimedia -O "$HOME/qt"
+          aqt install-qt linux desktop "$QT_VERSION" linux_gcc_64 -O "$HOME/qt"
+          aqt install-qt all_os wasm "$QT_VERSION" wasm_singlethread -O "$HOME/qt"
       - uses: mymindstorm/setup-emsdk@v14
         with:
           version: ${{ env.EMSCRIPTEN_VERSION }}
@@ -61,6 +61,8 @@ jobs:
           mkdir docs/game
           cp build/*.html build/*.js build/*.wasm docs/game/
           cp build/*.svg docs/game/ || true
+          mkdir docs/game/sounds
+          cp *.wav docs/game/sounds/
       - run: pip install zensical
       - run: zensical build --clean --strict
       - uses: actions/upload-pages-artifact@v4

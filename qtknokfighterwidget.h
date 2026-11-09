@@ -94,6 +94,7 @@ private:
   QProgressBar* m_richel_health_bar;
   QProgressBar* m_joost_health_bar;
 
+  // Unused in the web version
   QHash<QString, QSoundEffect*> m_sounds;
   QSoundEffect* m_playing_sound = nullptr;
 

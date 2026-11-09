@@ -25,7 +25,13 @@
 #include <QPainter>
 #include <QProgressBar>
 #include <QRandomGenerator>
+#ifdef Q_OS_WASM
+// Qt Multimedia is not available for WebAssembly:
+// the web version plays the sounds with the browser's Audio objects
+#include <emscripten/val.h>
+#else
 #include <QSoundEffect>
+#endif
 #include <QUrl>
 
 #include <algorithm>
@@ -136,12 +142,14 @@ QtKnokfighterWidget::QtKnokfighterWidget(QWidget* parent)
   m_wolk.m_left = 288;
   m_wolk.m_top = 56;
 
+#ifndef Q_OS_WASM
   for (const QString& name: sound_names)
   {
     QSoundEffect* const sound = new QSoundEffect(this);
     sound->setSource(QUrl("qrc:/sounds/" + name + ".wav"));
     m_sounds.insert(name, sound);
   }
+#endif
 
   createPanels();
 
@@ -210,9 +218,18 @@ void QtKnokfighterWidget::createPanels()
 
 void QtKnokfighterWidget::playSound(const QString& name)
 {
+#ifdef Q_OS_WASM
+  // The .wav files are in the 'sounds' folder next to the web page
+  using emscripten::val;
+  static val playing_sound = val::null();
+  if (!playing_sound.isNull()) playing_sound.call<void>("pause");
+  playing_sound = val::global("Audio").new_(val(("sounds/" + name + ".wav").toStdString()));
+  playing_sound.call<val>("play");
+#else
   if (m_playing_sound) m_playing_sound->stop();
   m_playing_sound = m_sounds.value(name);
   if (m_playing_sound) m_playing_sound->play();
+#endif
 }
 
 void QtKnokfighterWidget::paintEvent(QPaintEvent*)
