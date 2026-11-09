@@ -30,5 +30,8 @@ int main(int argc, char* argv[])
   w.move(0, 0);
 #endif
   w.show();
+  // Let the game receive the keys without clicking it first
+  w.activateWindow();
+  w.setFocus();
   return a.exec();
 }

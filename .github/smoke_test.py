@@ -21,6 +21,16 @@ with sync_playwright() as p:
     start = page.screenshot()
     # Give the game the keyboard focus, then start it
     page.mouse.click(400, 300)
+    time.sleep(1)
+    print("active element:", page.evaluate("""() => {
+        let e = document.activeElement;
+        let path = [];
+        while (e) {
+            path.push(e.tagName + (e.id ? '#' + e.id : '') + (e.className ? '.' + e.className : ''));
+            e = e.shadowRoot ? e.shadowRoot.activeElement : null;
+        }
+        return path.join(' > ');
+    }"""))
     page.keyboard.press("Space")
     time.sleep(2)
     page.screenshot(path="screenshot_2_running.png")
