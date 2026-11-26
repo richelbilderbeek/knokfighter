@@ -1,5 +1,7 @@
 # KnokFighter
 
+[![codecov](https://codecov.io/gh/richelbilderbeek/knokfighter/branch/main/graph/badge.svg)](https://codecov.io/gh/richelbilderbeek/knokfighter)
+
 - [Go to the nicely rendered website](https://richelbilderbeek.github.io/knokfighter/).
 
 The game is built by continuous integration into the folder `docs/game`,
