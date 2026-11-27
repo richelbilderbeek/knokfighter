@@ -55,6 +55,7 @@ Uppsala
 VCL
 WebAssembly
 Yadav
+Zensical
 carnaval
 codecov
 config
